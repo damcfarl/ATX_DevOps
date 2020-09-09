@@ -1,6 +1,13 @@
 terraform {
+  required_version = ">= 0.13"
+}
+
+terraform {
   required_providers {
-    aci = "=0.2.3"
+    aci = {
+      source  = "terraform-providers/aci"
+      version = "=0.2.3"
+    }
   }
 }
 

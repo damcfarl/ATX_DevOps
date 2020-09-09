@@ -1,14 +1,14 @@
 #
 variable "aci_username" { 
-  default = "username" 
+  default = "damcfarl" 
 }
 
 variable "aci_password" { 
-  default = "password" 
+  default = "cisco!123" 
 }
 
 variable "aci_url" { 
-  default = "https://X.X.X.X" 
+  default = "https://10.122.143.36"
 }
 
 variable "demo_tenant_tf" {
