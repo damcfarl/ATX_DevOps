@@ -1,6 +1,14 @@
+
+terraform {
+  required_version = ">= 0.13"
+}
+
 terraform {
   required_providers {
-    aci = "=0.2.3"
+    aci = {
+      source  = "terraform-providers/aci"
+      version = "=0.2.3"
+    }
   }
 }
 
@@ -112,21 +120,21 @@ resource "aci_contract_subject" "subject_tf" {
   relation_vz_rs_subj_filt_att = [
     aci_filter.allow_http.name,
     aci_filter.allow_icmp.name,
-#   aci_filter.allow_MySQL.name,
+    aci_filter.allow_MySQL.name,
   ]
 }
 
-#resource "aci_filter" "allow_MySQL" {
-#  tenant_dn = aci_tenant.tenant_tf.id
-#  name      = "allow_MySQL"
-#}
+resource "aci_filter" "allow_MySQL" {
+  tenant_dn = aci_tenant.tenant_tf.id
+  name      = "allow_MySQL"
+}
 
-#resource "aci_filter_entry" "MySQL" {
-#  name        = "MySQL"
-#  filter_dn   = aci_filter.allow_MySQL.id
-#  ether_t     = "ip"
-#  prot        = "tcp"
-#  d_from_port = "3306"
-#  d_to_port   = "3306"
-#  stateful    = "yes"
-#}
+resource "aci_filter_entry" "MySQL" {
+  name        = "MySQL"
+  filter_dn   = aci_filter.allow_MySQL.id
+  ether_t     = "ip"
+  prot        = "tcp"
+  d_from_port = "3306"
+  d_to_port   = "3306"
+  stateful    = "yes"
+}
