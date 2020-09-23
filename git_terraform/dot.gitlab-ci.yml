@@ -1,0 +1,47 @@
+before_script:
+  - rm -rf .terraform
+  - terraform --version
+  - terraform init
+
+stages:
+  - validate
+  - plan
+  - apply
+
+Validate:
+  stage: validate
+  script:
+    - terraform validate
+
+Review:
+  stage: plan
+  script:
+    - terraform plan -out=plan
+#    - terraform show
+  dependencies:
+    - Validate
+  artifacts:
+    paths:
+      - plan
+
+Push:
+  stage: apply
+  script:
+    - terraform apply -input=false plan
+  dependencies:
+    - Review
+  when: manual
+  only:
+    - master
+  allow_failure: false
+    
+##Notify:
+##  stage: .post
+##  script: 
+##    - /root/webexbot.sh
+##  dependencies:
+##    - Push
+##  when: on_success
+##  only:
+##    - master
+
